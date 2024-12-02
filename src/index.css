@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  body{
+    font-family: "Lato", sans-serif;
+    overflow: hidden;
+  }
+
+  .layout {
+    @apply h-[100vh] bg-purple-600 max-w-[1366px] ml-auto mr-auto pl-[20px] pr-[20px] flex flex-col;
+  }
+
+ 
