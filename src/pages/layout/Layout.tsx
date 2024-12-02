@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 export const Layout = () => {
   return (
-    <div className="layout sm:max-w-[640px] md:max-w-[1120px] lg:max-w-[1280px] sm:bg-red-600 md:bg-yellow-600 lg:bg-pink-700">
+    <div className="layout sm:max-w-[640px] md:max-w-[1020px] lg:max-w-[1280px]">
        <div>
           <Navbar />
        </div>

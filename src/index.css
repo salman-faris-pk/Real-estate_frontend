@@ -20,7 +20,30 @@
   }
 
   .layout {
-    @apply h-[100vh] bg-purple-600 max-w-[1366px] ml-auto mr-auto pl-[20px] pr-[20px] flex flex-col;
+    @apply h-[100vh] max-w-[1366px] ml-auto mr-auto pl-[20px] pr-[20px] flex flex-col;
   }
 
- 
+  .link-transition {
+    @apply transition-all duration-300 ease-in-out hover:scale-105;
+  }
+
+  .menu {
+    position: absolute;
+    top: 0;
+    right: -50%;
+    background-color: black;
+    color: white;
+    height: 100vh;
+    width: 50%;
+    transition: all 1s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+  
+  .menu.active {
+    right: 0;
+  }
+  
