@@ -4,7 +4,7 @@ export const Homepage = () => {
   return (
     <div className="flex h-full bg-[#fcf5f3] bg-opacity-15 sm:bg-opacity-100 sm:bg-white">
         <div className="flex-[3]">
-          <div className="flex flex-col sm:justify-start justify-center items-center sm:pe-16 pt-16">
+          <div className="flex flex-col sm:justify-start justify-center items-center sm:pe-16 pt-12">
              <h1 className="text-[28px] sm:text-[36px] font-semibold lg:text-[44px]">Find Real Estate & Get Your Dream Place</h1>
              <p className="text-xs sm:text-sm mt-7 sm:mt-2 text-gray-500">
                Explore a world of opportunities to find your dream home or investment property. Discover real estate that fits your lifestyle and budget, with expert guidance every step of the way. Start your journey to the perfect place today!
