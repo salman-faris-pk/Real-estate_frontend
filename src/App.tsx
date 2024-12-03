@@ -1,7 +1,14 @@
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Layout } from './pages/layout/layout';
+import { Layout } from './pages/layout/Layout';
 import { Homepage } from './pages/Homepage';
 import { ListPage } from './pages/listPage';
+import { SinglePage } from './pages/SinglePage';
+import { ProfilePage } from './pages/ProfilePage';
+import { Login } from './pages/Login';
+import { Register } from './pages/Register';
+import { Error } from './pages/Error';
+
+
 
 const App = () => {
 
@@ -19,6 +26,28 @@ const App = () => {
             path:'/list',
             element: <ListPage/>
           },
+          {
+            path:"/list/:id",
+            element:<SinglePage />
+          },
+          {
+            path:"/profile",
+            element:<ProfilePage/>
+          },
+          {
+            path:"/login",
+            element:<Login/>
+          },
+          {
+            path:"/register",
+            element:<Register/>
+          },
+          {
+            path: '*',
+            element: <Error />
+          },
+
+         
 
           
       ]

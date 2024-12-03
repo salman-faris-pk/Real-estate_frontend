@@ -42,8 +42,8 @@ export default function Navbar() {
 
         ) : (
         <div className="hidden md:block">
-        <a href="/login" className="me-10 px-3">Sign in</a>
-        <a href="/signup" className="me-10 px-4 py-3 bg-[#fece51]">
+        <a href="/login" className="me-10 px-3 font-medium">Sign in</a>
+        <a href="/register" className="me-10 px-4 py-3 bg-[#fece51]">
           Sign up
         </a>
       </div>
@@ -71,7 +71,7 @@ export default function Navbar() {
           ):(
             <>
                <a href="/login">Login</a>
-               <a href="/signup">Signup</a>
+               <a href="/register">Signup</a>
             </>
           )}
        
