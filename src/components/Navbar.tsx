@@ -9,8 +9,8 @@ export default function Navbar() {
     const user = false;
    
   return (
-  <nav className="h-[100px] flex items-center justify-between">
-    <div className="flex items-center gap-[50px]">
+  <nav className="h-[80px] flex items-center justify-between">
+    <div className="flex-[3] flex items-center gap-[40px]">
         <Link to="/" className="flex items-center justify-center font-bold text-[17px] md:text-[20px] gap-[10px]">
            <img src="/logo.png" alt="logo" className="w-5 md:w-7"/>
            <span>LuxoLand</span>
@@ -25,9 +25,9 @@ export default function Navbar() {
 
 
     {/**right */}
-    <div className="flex items-center justify-end md:bg-[#fcf5f3] h-full bg-transparent">
+    <div className="flex-[2] flex items-center justify-end md:bg-[#fcf5f3] h-full bg-transparent">
     {user ? (
-        <div className="hidden md:flex items-center justify-between gap-x-5 font-bold">
+        <div className="hidden md:flex items-center justify-between gap-x-2 font-bold">
           <div className="flex items-center justify-center cursor-pointer ms-16 text-xs">
           <img  src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt=""
             className="w-10 h-10 rounded-full object-cover mr-2"
@@ -42,8 +42,8 @@ export default function Navbar() {
 
         ) : (
         <div className="hidden md:block">
-        <a href="/" className="ms-14 me-16 px-3">Sign in</a>
-        <a href="/" className="me-10 px-5 py-3 bg-[#fece51]">
+        <a href="/login" className="me-10 px-3">Sign in</a>
+        <a href="/signup" className="me-10 px-4 py-3 bg-[#fece51]">
           Sign up
         </a>
       </div>
