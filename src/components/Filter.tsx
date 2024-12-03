@@ -3,8 +3,8 @@
 export const Filter = () => {
   return (
     <div className="flex flex-col gap-[10px]">
-        <h1 className="font-light text-[24px]">
-          Search results for <b>London</b>
+        <h1 className="font-thin text-[16px]">
+          Search results for <b className="font-semibold">London</b>
         </h1>
         <div className="top">
            <div className="item">

@@ -88,7 +88,7 @@
 }
 
 .thin-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #888; 
+  background-color: #5d5454; 
   border-radius: 4px;
 }
 
