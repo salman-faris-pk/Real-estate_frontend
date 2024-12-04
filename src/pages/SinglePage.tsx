@@ -1,5 +1,9 @@
 import {singlePostData,userData,listData} from "../lib/datas"
 import { Map } from "../components/Map"
+import { GiBusStop } from "react-icons/gi";
+import { IoRestaurantOutline } from "react-icons/io5";
+
+
 
 export const SinglePage = () => {
   return (
@@ -83,14 +87,14 @@ export const SinglePage = () => {
             </div>
           </div>
           <div className="feature">
-            <img src="/pet.png" alt="pet" className="w-6 h-6 bg-[rgba(254,205,81,0.209)]" />
+            <GiBusStop className="w-6 h-7 bg-[rgba(254,205,81,0.209)]" />
             <div>
               <span className="font-bold text-xs sm:text-sm">Bus Stop</span>
               <p className="text-[9px] md:text-[12px]">100m away</p>
             </div>
           </div>
           <div className="feature">
-            <img src="/fee.png" alt="fee" className="w-6 h-6 bg-[rgba(254,205,81,0.209)]"/>
+            <IoRestaurantOutline className="w-6 h-7 bg-[rgba(254,205,81,0.209)]"/>
             <div>
               <span className="font-bold text-xs sm:text-sm">Restaurant</span>
               <p className=" text-[9px] md:text-[12px]">200m away</p>
