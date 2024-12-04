@@ -1,5 +1,6 @@
 import { Card } from "../components/Card";
 import { Filter } from "../components/Filter";
+import { Map } from "../components/Map";
 import { ListData, listData } from "../lib/datas"
 
 export const ListPage = () => {
@@ -20,8 +21,8 @@ export const ListPage = () => {
 
 
         {/**right side */}
-        <div className="flex-[2] h-full bg-[#fcf5f3] hidden md:block">
-           {/* <Map> */}
+        <div className="flex-[2] h-full bg-[#fcf5f3] hidden sm:block">
+           <Map items={data}/>
         </div>
        
     </div>
