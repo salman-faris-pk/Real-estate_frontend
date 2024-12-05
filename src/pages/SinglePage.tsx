@@ -2,6 +2,7 @@ import {singlePostData,userData,listData} from "../lib/datas"
 import { Map } from "../components/Map"
 import { GiBusStop } from "react-icons/gi";
 import { IoRestaurantOutline } from "react-icons/io5";
+import { Slider } from "../components/Slider";
 
 
 
@@ -11,8 +12,8 @@ export const SinglePage = () => {
     <div className="flex-col md:flex-row flex overflow-scroll thin-scrollbar md:overflow-hidden h-full ">
       {/**left side */}
     <div className="flex-none h-max mb-[50px] md:mb-[0px] md:flex-[3] md:h-full overflow-y-scroll thin-scrollbar">
-      <div className="pr-[50px] sm:pr-[0px] md:pr-[20px]">
-        {/* <Slider images={singlePostData.images} /> */}
+      <div className="pr-[15px] sm:pr-[0px] md:pr-[20px]">
+        <Slider images={singlePostData.images} />
         <div className="mt-[50px]">
           <div className="flex-col gap-[20px] sm:gap-[0px] sm:flex-row flex justify-between">
             <div className="flex flex-col gap-[20px]">
@@ -25,12 +26,12 @@ export const SinglePage = () => {
                 $ {singlePostData.price}
               </div>
             </div>
-            <div className="flex flex-col items-center justify-center gap-[20px] px-[50px] py-0 sm:py-[20px] rounded-[10px] bg-[rgba(254,205,81,0.209)] text-sm font-semibold">
+            <div className="hidden sm:flex flex-col items-center justify-center gap-[20px] px-[50px] py-0 sm:py-[20px] rounded-[10px] bg-[rgba(254,205,81,0.209)] text-sm font-semibold">
               <img src={userData.img} alt="user" className="w-[50px] h-[50px] rounded-full object-cover" />
               <span>{userData.name}</span>
             </div>
           </div>
-          <div className="mt-[50px] text-sm text-[#555] leading-5">{singlePostData.description}</div>
+          <div className="mt-[20px] text-xs text-[#555] leading-5">{singlePostData.description}</div>
         </div>
       </div>
     </div>
