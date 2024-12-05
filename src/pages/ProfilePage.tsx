@@ -4,7 +4,7 @@ import { List } from "../components/List"
 
 export const ProfilePage = () => {
   return (
-    <div className="flex flex-col md:flex-row h-full overflow-scroll thin-scrollbar">
+    <div className="flex flex-col md:flex-row h-full overflow-scroll thin-scrollbar md:overflow-hidden">
       <div className="flex-none h-max md:h-full md:flex-[3] overflow-y-scroll thin-scrollbar pb-[50px]">
         <div className="pr-[30px] md:pr-[50px] flex flex-col gap-[50px]">
           <div className="flex items-center justify-between">
