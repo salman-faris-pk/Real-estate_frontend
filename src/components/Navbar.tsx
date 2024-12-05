@@ -6,7 +6,7 @@ export default function Navbar() {
 
     const [open, setOpen] = useState(false);
 
-    const user = false;
+    const user = true;
    
   return (
   <nav className="h-[80px] flex items-center justify-between">
