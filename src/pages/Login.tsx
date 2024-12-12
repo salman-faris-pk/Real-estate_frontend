@@ -28,10 +28,10 @@ export const Login = () => {
         username,
         password,
       });
-      console.log(response);
+      
       
       if(response.data.success){
-        updateUser(response.data)
+        updateUser(response.data.userInfo)
          navigate("/");
         }
      

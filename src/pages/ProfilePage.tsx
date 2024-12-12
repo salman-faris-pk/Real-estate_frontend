@@ -1,8 +1,26 @@
+import { useNavigate } from "react-router-dom";
 import { Chat } from "../components/Chat"
 import { List } from "../components/List"
+import apiRequest from "../lib/apiRequest";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 
 export const ProfilePage = () => {
+
+  const {updateUser}:any=useContext(AuthContext)
+
+  const navigate = useNavigate();
+
+  const handleLogout=async()=>{
+    try {
+      await apiRequest.post("/auth/logout");
+      updateUser(null);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <div className="flex flex-col md:flex-row h-full overflow-scroll thin-scrollbar md:overflow-hidden">
       <div className="flex-none h-max md:h-full md:flex-[3] overflow-y-scroll thin-scrollbar pb-[50px]">
@@ -26,6 +44,11 @@ export const ProfilePage = () => {
             <span className="flex items-center gap-[20px]">
               E-mail: <b>john@gmail.com</b>
             </span>
+            <button className="w-[100px] bg-teal-600 border-none text-white py-[10px] px-[20px] cursor-pointer rounded-md"
+             onClick={handleLogout}
+            >
+               Logout
+            </button>
           </div>
           <div className="flex items-center justify-between">
             <h1 className="text-xl md:text-2xl font-extralight text-gray-800">My List</h1>

@@ -3,7 +3,7 @@ import { createContext, useEffect, useState, ReactNode } from "react";
 
 interface AuthContextType {
   currentUser: string | null;
-  updateUser: (data: string) => void;
+  updateUser: (data: string | null) => void;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
