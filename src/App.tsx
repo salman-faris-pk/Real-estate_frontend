@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider} from 'react-router-dom'
-import { Layout } from './pages/layout/Layout';
+import { Layout, RequireAuth } from './pages/layout/Layout';
 import { Homepage } from './pages/Homepage';
 import { ListPage } from './pages/listPage';
 import { SinglePage } from './pages/SinglePage';
@@ -31,10 +31,6 @@ const App = () => {
             element:<SinglePage />
           },
           {
-            path:"/profile",
-            element:<ProfilePage/>
-          },
-          {
             path:"/login",
             element:<Login/>
           },
@@ -45,13 +41,29 @@ const App = () => {
           {
             path: '*',
             element: <Error />
-          },
-
-         
-
-          
+          },   
       ]
-    }
+    },
+
+    {
+      path: "/",
+      element: <RequireAuth />,
+      children: [
+        {
+          path: "/profile",
+          element: <ProfilePage />,
+          // loader: profilePageLoader
+        },
+        {
+          path: "/profile/update",
+          // element: <ProfileUpdatePage />,
+        },
+        {
+          path: "/add",
+          // element: <NewPostPage />,
+        },
+      ],
+    },
   ]);
 
   return (
