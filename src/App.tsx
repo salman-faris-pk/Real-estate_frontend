@@ -7,6 +7,7 @@ import { ProfilePage } from './pages/ProfilePage';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Error } from './pages/Error';
+import ProfileUpdate from './pages/ProfileUpdate';
 
 
 
@@ -56,7 +57,7 @@ const App = () => {
         },
         {
           path: "/profile/update",
-          // element: <ProfileUpdatePage />,
+          element: <ProfileUpdate />,
         },
         {
           path: "/add",

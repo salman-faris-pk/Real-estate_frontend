@@ -1,12 +1,25 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
+import apiRequest from "../lib/apiRequest";
 
 
 export default function Navbar() {
 
     const [open, setOpen] = useState(false);
+     const navigate=useNavigate()
+    const {currentUser,updateUser}:any=useContext(AuthContext)
 
-    const user = false;
+    const handleLogout=async()=>{
+      try {
+        await apiRequest.post("/auth/logout");
+        updateUser(null);
+        navigate("/");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    
    
   return (
   <nav className="h-[80px] flex items-center justify-between">
@@ -26,13 +39,13 @@ export default function Navbar() {
 
     {/**right */}
     <div className="flex-[2] flex items-center justify-end md:bg-[#fcf5f3] h-full bg-transparent">
-    {user ? (
+    {currentUser ? (
         <div className="hidden md:flex items-center justify-between gap-x-2 font-bold">
           <div className="flex items-center justify-center cursor-pointer ms-16 text-xs">
-          <img  src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt=""
+          <img   src={currentUser.avatar || "/noavatar.jpg"} alt=""
             className="w-10 h-10 rounded-full object-cover mr-2"
            />
-            <span>John Doe</span>
+            <span className="me-2">{currentUser.username}</span>
             </div>
             <Link to="/profile" className="me-12 py-3 px-6 text-sm bg-[#fece51] cursor-pointer border-none relative">
               <div className="absolute -top-2 -right-2 bg-red-700 text-white text-xs rounded-full w-[20px] h-[20px] flex items-center justify-center">3</div>
@@ -63,10 +76,10 @@ export default function Navbar() {
           <a href="/about">About</a>
           <a href="/contact">Contact</a>
           <a href="/agents">Agents</a>
-          {user ?(
-            <>
+          {currentUser ?(
+              <>
               <a href="/profile">profile</a>
-              <a href="/logout">logout</a>   
+              <a onClick={handleLogout} className="cursor-pointer">logout</a>   
               </>     
           ):(
             <>
