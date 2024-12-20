@@ -8,6 +8,7 @@ import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Error } from './pages/Error';
 import ProfileUpdate from './pages/ProfileUpdate';
+import { AddPost } from './pages/AddPost';
 
 
 
@@ -60,8 +61,8 @@ const App = () => {
           element: <ProfileUpdate />,
         },
         {
-          path: "/add",
-          // element: <NewPostPage />,
+          path: "/post/add",
+          element: <AddPost />,
         },
       ],
     },

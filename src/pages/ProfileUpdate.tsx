@@ -44,21 +44,7 @@ const ProfileUpdate = () => {
   };
 
   return (
-    <div className="h-full sm:flex">
-
-    <div className="bg-teal-50 mt-3 mb-10 py-7 flex flex-col gap-[20px] items-center justify-center sm:hidden">
-        <img src={avatar[0] || currentUser.avatar || "/noavatar.jpg"} alt="" className="w-28 h-20 object-cover rounded-md" />
-        <UploadWidget
-          uwConfig={{
-            cloudName: "dqqcpkeup",
-            uploadPreset: "estate",
-            multiple: false,
-            maxImageFileSize: 2000000,
-            folder: "avatars",
-          }}
-          setState={setAvatar}
-        />
-      </div>
+    <div className="h-full sm:flex flex-col sm:flex-row">
 
       <div className="flex-[3] flex items-center justify-center">
         <form onSubmit={handleSubmit} className="flex flex-col gap-[20px]">
@@ -93,8 +79,8 @@ const ProfileUpdate = () => {
         </form>
       </div>
 
-      <div className="flex-[2] bg-[#fcf5f3] sm:flex flex-col gap-[20px] items-center justify-center hidden">
-        <img src={avatar[0] || currentUser.avatar || "/noavatar.jpg"} alt="" className="w-1/2 object-cover" />
+      <div className="flex-[2] sm:bg-[#fcf5f3] sm:flex flex-col gap-[20px] items-center justify-center mt-5 sm:mt-0">
+        <img src={avatar[0] || currentUser.avatar || "/noavatar.jpg"} alt="" className="w-full sm:w-1/2 object-cover mb-3 sm:mb-0 rounded-md" />
         <UploadWidget
           uwConfig={{
             cloudName: "dqqcpkeup",
@@ -107,6 +93,7 @@ const ProfileUpdate = () => {
         />
       </div>
     </div>
+
   )
 }
 

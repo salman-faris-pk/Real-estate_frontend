@@ -56,7 +56,9 @@ export const ProfilePage = () => {
           </div>
           <div className="flex items-center justify-between">
             <h1 className="text-xl md:text-2xl font-extralight text-gray-800">My List</h1>
+            <Link to={'/post/add'}>
             <button className="py-2 px-3 md:py-3 md:px-6 bg-[#fece51] cursor-pointer border-none">Create New Post</button>
+            </Link>
           </div>
           <List />
           <div className="flex items-center justify-between">

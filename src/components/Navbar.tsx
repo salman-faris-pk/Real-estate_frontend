@@ -79,7 +79,7 @@ export default function Navbar() {
           {currentUser ?(
               <>
               <a href="/profile">profile</a>
-              <a onClick={handleLogout} className="cursor-pointer">logout</a>   
+              <a onClick={handleLogout} className="cursor-pointer">Logout</a>   
               </>     
           ):(
             <>
