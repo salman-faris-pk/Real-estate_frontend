@@ -108,3 +108,10 @@
 .pro-scrollbar::-webkit-scrollbar {
   width: 0px; 
 }
+
+
+.form-item {
+  @apply w-[30%] flex flex-col gap-[5px];
+}
+
+
