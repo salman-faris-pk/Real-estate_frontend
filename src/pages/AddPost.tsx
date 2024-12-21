@@ -14,14 +14,57 @@ export const AddPost = () => {
 
   const navigate=useNavigate()
 
-   const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
-    e.preventDefault();
+   const handleSubmit=async(e:React.FormEvent<HTMLFormElement>)=>{
 
-    const formData=new FormData(e.target as HTMLFormElement)
-     const inputs= Object.fromEntries(formData)
+      e.preventDefault();
+
+      const formData=new FormData(e.target as HTMLFormElement)
+      
+      const inputs : Record<string, string>= {};
+        formData.forEach((value, key)=> {
+           if(typeof value === "string"){
+            inputs[key] = value;
+           }else{
+            console.error(`Unexpected file input for key: ${key}`);
+           }
+        });
+          
 
      try {
+       
+      const res=await apiRequest.post("/post/add-post",{
+        postData:{
+          title: inputs.title,
+          price: parseInt(inputs.price),
+          address: inputs.address,
+          city: inputs.city,
+          bedroom: parseInt(inputs.bedroom),
+          bathroom: parseInt(inputs.bathroom),
+          type: inputs.type,
+          property: inputs.property,
+          latitude: inputs.latitude,
+          longitude: inputs.longitude,
+          images: images,
+        },
+          postDetail: {
+            desc: value,
+            utilities: inputs.utilities,
+            pet: inputs.pet,
+            income: inputs.income,
+            size: parseInt(inputs.size),
+            school: parseInt(inputs.school),
+            bus: parseInt(inputs.bus),
+            restaurant: parseInt(inputs.restaurant),
+          },
+        
+      });
+       
+      console.log(res.data);
       
+      if(res.status === 200){
+         navigate('/list/'+res.data.id)
+      }
+
      } catch (err:any) {
       console.log(err);
       setError(error);
@@ -39,15 +82,15 @@ export const AddPost = () => {
         <form onSubmit={handleSubmit} className='flex justify-between flex-wrap gap-[20px]'>
             <div className="form-item">
               <label htmlFor="title">Title</label>
-              <input id="title" name="title" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input id="title" name="title" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="price">Price</label>
-              <input id="price" name="price" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input id="price" name="price" type="number" min={500} className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="address">Address</label>
-              <input id="address" name="address" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input id="address" name="address" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
         
             <div className="form-item w-full h-[325px]">
@@ -61,19 +104,19 @@ export const AddPost = () => {
             </div>
             <div className="form-item">
               <label htmlFor="bedroom">Bedroom Number</label>
-              <input min={1} id="bedroom" name="bedroom" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input min={1} id="bedroom" name="bedroom" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="bathroom">Bathroom Number</label>
-              <input min={1} id="bathroom" name="bathroom" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input min={1} id="bathroom" name="bathroom" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="latitude">Latitude</label>
-              <input id="latitude" name="latitude" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input id="latitude" name="latitude" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="longitude">Longitude</label>
-              <input id="longitude" name="longitude" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input id="longitude" name="longitude" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="type">Type</label>
@@ -144,9 +187,9 @@ export const AddPost = () => {
 
       {/**sideContainer */}
 
-       <div className='flex-[2] bg-[#fcf5f3] flex flex-col gap-5 items-center justify-center mb-3 md:mb-0 py-4 md:py-0'>
+       <div className='flex-[2] w-full bg-[#fcf5f3] flex flex-col gap-5 items-center justify-center mb-3 md:mb-0 py-4 md:py-0'>
         {images.map((image, index) => (
-          <img src={image} key={index} alt="images.." className='w-[50%] h-[180px] object-cover rounded-[5px]'/>
+          <img src={image} key={index} alt="images.." className='w-52 h-[90px] object-cover rounded-[5px]'/>
         ))}
 
         <UploadWidget
