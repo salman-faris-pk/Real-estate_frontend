@@ -170,15 +170,15 @@ export const AddPost = () => {
               <input min={0} id="size" name="size" type="number" className='p-3 rounded-[5px] border border-solid border-gray-600'/>
             </div>
             <div className="form-item">
-              <label htmlFor="school">School</label>
+              <label htmlFor="school">School(m)</label>
               <input min={0} id="school" name="school" type="number" className='p-3 rounded-[5px] border border-solid border-gray-600'/>
             </div>
             <div className="form-item">
-              <label htmlFor="bus">bus</label>
+              <label htmlFor="bus">bus(m)</label>
               <input min={0} id="bus" name="bus" type="number" className='p-3 rounded-[5px] border border-solid border-gray-600'/>
             </div>
             <div className="form-item">
-              <label htmlFor="restaurant">Restaurant</label>
+              <label htmlFor="restaurant">Restaurant(m)</label>
               <input min={0} id="restaurant" name="restaurant" type="number" className='p-3 rounded-[5px] border border-solid border-gray-600'/>
             </div>
              {loading ? (

@@ -1,4 +1,3 @@
-import {singlePostData,userData,listData} from "../lib/datas"
 import { Map } from "../components/Map"
 import { GiBusStop } from "react-icons/gi";
 import { IoRestaurantOutline } from "react-icons/io5";
@@ -11,7 +10,7 @@ import { useLoaderData} from "react-router-dom"
 export const SinglePage = () => {
 
   const post=useLoaderData()
- console.log(post);
+  // console.log(post);
  
  
   return (

@@ -7,7 +7,7 @@ export const Chat = () => {
 
   return (
     <div className="h-full flex flex-col">
-    <div className="flex flex-col gap-2 overflow-y-scroll pro-scrollbar h-[300px]  md:h-[250px] mb-6 md:mb-3">
+    <div className="flex flex-col gap-2 overflow-y-scroll pro-scrollbar h-[300px]  md:h-[220px] mb-6 md:mb-3">
       <h1 className="font-extralight text-lg md:text-xl mt-3 md:mt-0">Messages</h1>
       <div className="message" onClick={()=> setChat(true)}>
         <img
@@ -61,7 +61,7 @@ export const Chat = () => {
     {chat && (
       <div className="flex-[1] bg-white flex flex-col justify-between">
 
-        <div className="bg-[#f7c14b85] p-2 font-bold flex items-center justify-between rounded-sm">
+        <div className="bg-[#f7c14b85] p-2 md:p-1 font-bold flex items-center justify-between rounded-sm">
           <div className="flex items-center gap-[20px]">
             <img
               src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
@@ -73,7 +73,7 @@ export const Chat = () => {
           <span className="cursor-pointer text-sm" onClick={()=>setChat(false)}>X</span>
         </div>
 
-        <div className="h-[400px] md:h-[210px] overflow-scroll pro-scrollbar p-3 flex flex-col gap-[20px]">
+        <div className="h-[400px] md:h-[200px] overflow-scroll pro-scrollbar p-3 flex flex-col gap-[20px]">
           <div className="w-1/2">
             <p className="text-sm">Lorem ipsum dolor sit amet</p>
             <span className="text-[8px] bg-[#f7c14b39] p-[2px] rounded-[5px]">1 hour ago</span>
@@ -116,7 +116,7 @@ export const Chat = () => {
           </div>
         </div>
 
-        <div className="border-t-2 border-solid border-[#f7c14b85] h-[50px] flex items-center justify-between">
+        <div className="border-t-2 border-solid border-[#f7c14b85] h-[50px] md:h-[40px] flex items-center justify-between">
           <textarea className="flex-[3] h-full border-none outline-none p-2 text-xs text-black "></textarea>
           <button className="flex-[1] bg-[#f7c14b85] h-full font-mono border-none cursor-pointer">Send</button>
         </div>
