@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import { UploadWidget } from '../components/uploadWidget/UploadWidget';
 import apiRequest from '../lib/apiRequest';
 import { useNavigate } from 'react-router-dom';
+import { htmlToText } from 'html-to-text';
 
 
 export const AddPost = () => {
@@ -11,12 +12,14 @@ export const AddPost = () => {
   const [value, setValue] = useState("");
   const [images, setImages] = useState([]);
   const [error, setError] = useState("");
+  const [loading,setLoading]=useState(false)
 
-  const navigate=useNavigate()
+  const navigate=useNavigate();
 
    const handleSubmit=async(e:React.FormEvent<HTMLFormElement>)=>{
 
       e.preventDefault();
+       setLoading(true)
 
       const formData=new FormData(e.target as HTMLFormElement)
       
@@ -31,8 +34,8 @@ export const AddPost = () => {
           
 
      try {
-       
-      const res=await apiRequest.post("/post/add-post",{
+    
+       const res=await apiRequest.post("/post/add-post",{
         postData:{
           title: inputs.title,
           price: parseInt(inputs.price),
@@ -47,7 +50,7 @@ export const AddPost = () => {
           images: images,
         },
           postDetail: {
-            desc: value,
+            desc: htmlToText(value),
             utilities: inputs.utilities,
             pet: inputs.pet,
             income: inputs.income,
@@ -59,18 +62,17 @@ export const AddPost = () => {
         
       });
        
-      console.log(res.data);
-      
       if(res.status === 200){
          navigate('/list/'+res.data.id)
+         setLoading(false)
       }
 
      } catch (err:any) {
       console.log(err);
       setError(error);
+      setLoading(false)
      }
       
-     
    }
 
   return (
@@ -80,43 +82,44 @@ export const AddPost = () => {
         <h1>Add New Post</h1>
         <div className="mt-[30px] mr-[50px] mb-[100px]">
         <form onSubmit={handleSubmit} className='flex justify-between flex-wrap gap-[20px]'>
+
             <div className="form-item">
               <label htmlFor="title">Title</label>
-              <input id="title" name="title" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
+              <input id="title" name="title" type="text" className='p-3 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="price">Price</label>
-              <input id="price" name="price" type="number" min={500} className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
+              <input id="price" name="price" type="number" min={500} className='p-3 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="address">Address</label>
-              <input id="address" name="address" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
+              <input id="address" name="address" type="text" className='p-3 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
         
-            <div className="form-item w-full h-[325px]">
+            <div className="flex flex-col gap-1 w-full h-[320px] mb-10 sm:mb-8 md:mb-0">
               <label htmlFor="desc">Description</label>
-              <ReactQuill theme="snow" onChange={setValue} value={value} className='h-[200px] text-[16px]'/>
+              <ReactQuill theme="snow" onChange={setValue} value={value} className='quill'/>
             </div>
 
             <div className="form-item">
               <label htmlFor="city">City</label>
-              <input id="city" name="city" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input id="city" name="city" type="text" className='p-3 rounded-[5px] border border-solid border-gray-600'/>
             </div>
             <div className="form-item">
               <label htmlFor="bedroom">Bedroom Number</label>
-              <input min={1} id="bedroom" name="bedroom" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
+              <input min={1} id="bedroom" name="bedroom" type="number" className='p-3 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="bathroom">Bathroom Number</label>
-              <input min={1} id="bathroom" name="bathroom" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
+              <input min={1} id="bathroom" name="bathroom" type="number" className='p-3 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="latitude">Latitude</label>
-              <input id="latitude" name="latitude" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
+              <input id="latitude" name="latitude" type="text" className='p-3 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="longitude">Longitude</label>
-              <input id="longitude" name="longitude" type="text" className='p-5 rounded-[5px] border border-solid border-gray-600' required/>
+              <input id="longitude" name="longitude" type="text" className='p-3 rounded-[5px] border border-solid border-gray-600' required/>
             </div>
             <div className="form-item">
               <label htmlFor="type">Type</label>
@@ -159,27 +162,30 @@ export const AddPost = () => {
                 name="income"
                 type="text"
                 placeholder="Income Policy"
-                className='p-5 rounded-[5px] border border-solid border-gray-600'
+                className='p-3 rounded-[5px] border border-solid border-gray-600'
               />
             </div>
             <div className="form-item">
               <label htmlFor="size">Total Size (sqft)</label>
-              <input min={0} id="size" name="size" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input min={0} id="size" name="size" type="number" className='p-3 rounded-[5px] border border-solid border-gray-600'/>
             </div>
             <div className="form-item">
               <label htmlFor="school">School</label>
-              <input min={0} id="school" name="school" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input min={0} id="school" name="school" type="number" className='p-3 rounded-[5px] border border-solid border-gray-600'/>
             </div>
             <div className="form-item">
               <label htmlFor="bus">bus</label>
-              <input min={0} id="bus" name="bus" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input min={0} id="bus" name="bus" type="number" className='p-3 rounded-[5px] border border-solid border-gray-600'/>
             </div>
             <div className="form-item">
               <label htmlFor="restaurant">Restaurant</label>
-              <input min={0} id="restaurant" name="restaurant" type="number" className='p-5 rounded-[5px] border border-solid border-gray-600'/>
+              <input min={0} id="restaurant" name="restaurant" type="number" className='p-3 rounded-[5px] border border-solid border-gray-600'/>
             </div>
-
-            <button className="w-full py-2 rounded-[5px] border-none bg-teal-600 text-white font-bold cursor-pointer">Add</button>
+             {loading ? (
+            <button className="w-full md:w-[30%] p-3 md:p-0  rounded-[5px] border-none bg-teal-600 text-white font-bold cursor-pointer">posting...</button>
+             ):(
+            <button className="w-full md:w-[30%] p-3 md:p-0  rounded-[5px] border-none bg-teal-600 text-white font-bold cursor-pointer">Add</button>
+             )}
             {error && <span>{error}</span>}
           </form>
         </div>
@@ -187,7 +193,7 @@ export const AddPost = () => {
 
       {/**sideContainer */}
 
-       <div className='flex-[2] w-full bg-[#fcf5f3] flex flex-col gap-5 items-center justify-center mb-3 md:mb-0 py-4 md:py-0'>
+       <div className='flex-[2] w-full bg-[#fcf5f3] sm:bg-white md:bg-[#fcf5f3] flex flex-col gap-5 items-center justify-center mb-3 md:mb-0 py-4 md:py-0'>
         {images.map((image, index) => (
           <img src={image} key={index} alt="images.." className='w-52 h-[90px] object-cover rounded-[5px]'/>
         ))}

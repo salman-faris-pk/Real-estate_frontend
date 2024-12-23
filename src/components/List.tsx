@@ -1,11 +1,10 @@
-import { listData } from "../lib/datas"
 import { Card } from "./Card"
 
 
-export const List = () => {
+export const List = ({posts}:any) => {
   return (
     <div className="flex flex-col gap-[50px]">
-      {listData.map((item)=>(
+      {posts&&posts.map((item:any)=>(
         <Card key={item.id} item={item}/>
       ))}
     </div>

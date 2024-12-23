@@ -1,15 +1,12 @@
 import { Link } from "react-router-dom"
-import { ListData } from "../lib/datas"
 import { MapContainer, Marker, Popup, TileLayer,} from 'react-leaflet'
 import "leaflet/dist/leaflet.css";
 
 
-interface mapItemsProps{
-    items:ListData[]
-}
 
-export const Map = ({items}: mapItemsProps) => {
 
+export const Map = ({items}:any) => {
+ 
   return (
     <MapContainer center={[12.2602, 77.1461]} zoom={6} scrollWheelZoom={false} className="w-full h-full rounded-tl-md rounded-tr-md">
      <TileLayer
@@ -17,23 +14,23 @@ export const Map = ({items}: mapItemsProps) => {
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
      />
 
-     {items.map((item)=>(
-        <Marker position={[item.latitude,item.longitude]} key={item.id}>
+
+        <Marker position={[items?.latitude,items?.longitude]} key={items?.id}>
             <Popup>
                 <div className="flex flex-grow  gap-[20px]">
-                   <img src={item.img} alt="property" className="w-16 h-12 object-cover rounded-[5px]" />
+                   <img src={items?.images[0]} alt="property" className="w-16 h-12 object-cover rounded-[5px]" />
                    <div className="flex flex-col justify-between">
-                     <Link to={`/list/${item.id}`}>
-                       {item.title}
+                     <Link to={`/list/${items?.id}`}>
+                       {items?.title}
                      </Link>
-                      <span>{item.bedroom} bedroom</span>
-                      <b>$ {item.price}</b>
+                      <span>{items?.bedroom} bedroom</span>
+                      <b>$ {items?.price}</b>
                    </div>
                 </div>
 
             </Popup>
         </Marker>
-     ))}
+     
 
     </MapContainer>
   )

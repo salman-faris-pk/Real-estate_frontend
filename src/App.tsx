@@ -9,6 +9,7 @@ import { Register } from './pages/Register';
 import { Error } from './pages/Error';
 import ProfileUpdate from './pages/ProfileUpdate';
 import { AddPost } from './pages/AddPost';
+import { ListPageLoader,singlePageLoader } from './lib/loader';
 
 
 
@@ -26,11 +27,12 @@ const App = () => {
           },
           {
             path:'/list',
-            element: <ListPage/>
+            element: <ListPage/>,
           },
           {
             path:"/list/:id",
-            element:<SinglePage />
+            element:<SinglePage />,
+            loader: singlePageLoader,
           },
           {
             path:"/login",
@@ -54,7 +56,7 @@ const App = () => {
         {
           path: "/profile",
           element: <ProfilePage />,
-          // loader: profilePageLoader
+          loader: ListPageLoader,
         },
         {
           path: "/profile/update",

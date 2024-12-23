@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
-import { ListData } from "../lib/datas"
+import { RoomDetails } from '../lib/types'
 
 
-
-interface CardProps{
-  item: ListData;
+interface RoomDataProps{
+   item: RoomDetails;
 }
 
-export const Card = ({item}:CardProps) => {
+export const Card = ({item}: RoomDataProps) => {
   return (
     <div className="flex gap-[20px] pb-1    ">
          <Link to={`/list/${item.id}`} className="flex-[2] h-[200px] hidden sm:block">
-          <img src={item.img} alt={`${item.title}`} className="w-full h-full object-cover rounded-[10px]"/> 
+          <img src={item.images[0]} alt={`${item.title}`} className="w-full h-full object-cover rounded-[10px]"/> 
          </Link>
           <div className="flex-[3] flex flex-col justify-between gap-[10px]">
 

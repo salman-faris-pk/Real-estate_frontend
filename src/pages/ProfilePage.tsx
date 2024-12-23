@@ -1,13 +1,15 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Await, Link, useLoaderData, useNavigate } from "react-router-dom";
 import { Chat } from "../components/Chat"
 import { List } from "../components/List"
 import apiRequest from "../lib/apiRequest";
-import { useContext } from "react";
+import { Suspense, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 
 export const ProfilePage = () => {
 
+  const data= useLoaderData();
+  
   const {updateUser,currentUser}:any=useContext(AuthContext)
 
   const navigate = useNavigate();
@@ -60,7 +62,16 @@ export const ProfilePage = () => {
             <button className="py-2 px-3 md:py-3 md:px-6 bg-[#fece51] cursor-pointer border-none">Create New Post</button>
             </Link>
           </div>
-          <List />
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await 
+             resolve={data?.postResponse}
+             errorElement={<p>Error loading posts!</p>}
+            >
+              {(postResponse)=> <List posts={postResponse.data}/>}
+               
+            </Await>
+          </Suspense>
+
           <div className="flex items-center justify-between">
             <h1 className="text-xl md:text-2xl font-extralight text-gray-800">Saved List</h1>
           </div>
