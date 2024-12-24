@@ -28,6 +28,7 @@ const App = () => {
           {
             path:'/list',
             element: <ListPage/>,
+            loader: ListPageLoader,
           },
           {
             path:"/list/:id",
@@ -56,7 +57,7 @@ const App = () => {
         {
           path: "/profile",
           element: <ProfilePage />,
-          loader: ListPageLoader,
+          // loader: profilePageLoader,
         },
         {
           path: "/profile/update",

@@ -32,7 +32,7 @@ export default function Navbar() {
         <a href="/" className="link-transition">Home</a>
         <a href="/about" className="link-transition">About</a>
         <a href="/contact" className="link-transition">Contact</a>
-        <a href="/agents" className="link-transition">Agents</a>
+        <a href="/list" className="link-transition">Explore</a>
         </div>
     </div>
 
@@ -75,7 +75,7 @@ export default function Navbar() {
           <a href="/">Home</a>
           <a href="/about">About</a>
           <a href="/contact">Contact</a>
-          <a href="/agents">Agents</a>
+          <a href="/list">Explore</a>
           {currentUser ?(
               <>
               <a href="/profile">profile</a>
