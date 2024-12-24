@@ -73,15 +73,6 @@
   }
 }
 
-.bottom {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-
-}
-
-
 
 .thin-scrollbar::-webkit-scrollbar {
   width: 4px; 
