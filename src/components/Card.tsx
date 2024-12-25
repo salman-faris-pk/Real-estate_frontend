@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { RoomDetails } from '../lib/types'
 
 
@@ -7,6 +7,8 @@ interface RoomDataProps{
 }
 
 export const Card = ({item}: RoomDataProps) => {
+
+ 
   return (
     <div className="flex gap-[20px] pb-1    ">
          <Link to={`/list/${item.id}`} className="flex-[2] h-[200px] hidden sm:block">

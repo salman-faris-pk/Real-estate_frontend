@@ -2,7 +2,10 @@ import { Map } from "../components/Map"
 import { GiBusStop } from "react-icons/gi";
 import { IoRestaurantOutline } from "react-icons/io5";
 import { Slider } from "../components/Slider";
-import { useLoaderData} from "react-router-dom"
+import { useLoaderData, useNavigate} from "react-router-dom"
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/AuthContext";
+import apiRequest from "../lib/apiRequest";
 
 
 
@@ -11,7 +14,29 @@ export const SinglePage = () => {
 
   const post=useLoaderData()
   // console.log(post);
+
+  const [saved,setSaved]=useState(post.isSaved)
+  const { currentUser }:any=useContext(AuthContext)
+  const navigate = useNavigate();
  
+  const handleSave = async()=>{
+    
+    if (!currentUser) {
+      navigate("/login");
+    };
+
+    setSaved((prev:any) => !prev);
+
+     try {
+      await apiRequest.post('/user/save',{
+         postId: post.id
+      });
+
+     } catch (err) {
+      console.log(err);
+      setSaved((prev:any) => !prev);
+     }
+  };
  
   return (
     
@@ -140,9 +165,14 @@ export const SinglePage = () => {
             <img src="/chat.png" alt="chat" className="w-4 h-4"/>
             Send a Message
           </button>
-          <button className="p-4 flex items-center gap-[5px] text-xs bg-white border border-solid border-[#fece51] rounded-[5px] cursor-pointer">
+          <button className="p-4 flex items-center gap-[5px] text-xs bg-white border border-solid border-[#fece51] rounded-[5px] cursor-pointer"
+           onClick={handleSave}
+           style={{
+            backgroundColor: saved ? "#fece51" : "white",
+           }}
+          >
             <img src="/save.png" alt="save" className="w-4 h-4"/>
-            Save the Place
+            {saved ? "Place Saved" : "Save the Place"}
           </button>
         </div>
       </div>
