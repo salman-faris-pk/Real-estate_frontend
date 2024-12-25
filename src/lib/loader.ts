@@ -13,5 +13,14 @@ export const ListPageLoader = async({request,params}:any)=>{
    return ({
       postResponse:postData,
    });
+};
 
+
+export const profilePageLoader=async()=>{
+  
+   const postPromise=apiRequest("/user/profilePosts");
+
+   return ({
+      postResponse: postPromise,
+   })
 }

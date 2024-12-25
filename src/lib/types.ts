@@ -11,5 +11,6 @@ export interface RoomDetails {
     bathroom: number;
     latitude: string | number; 
     longitude: string | number; 
+    createdAt: string | number;
   };
   

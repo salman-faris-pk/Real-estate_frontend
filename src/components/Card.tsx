@@ -1,5 +1,7 @@
 import { Link} from "react-router-dom";
 import { RoomDetails } from '../lib/types'
+import moment from 'moment';
+
 
 
 interface RoomDataProps{
@@ -8,9 +10,8 @@ interface RoomDataProps{
 
 export const Card = ({item}: RoomDataProps) => {
 
- 
   return (
-    <div className="flex gap-[20px] pb-1    ">
+    <div className="flex gap-[20px] pb-1">
          <Link to={`/list/${item.id}`} className="flex-[2] h-[200px] hidden sm:block">
           <img src={item.images[0]} alt={`${item.title}`} className="w-full h-full object-cover rounded-[10px]"/> 
          </Link>
@@ -38,14 +39,10 @@ export const Card = ({item}: RoomDataProps) => {
               <span className="text-xs">{item.bathroom} bathroom</span>
              </div>
              </div>
-             <div className="flex gap-[20px]">
-              <div className="border border-[#999] px-[5px] py-[2px] rounded-[5px] cursor-pointer flex items-center justify-center hover:bg-[#d3d3d3]">
-              <img src="/save.png" alt="save" className="w-4 h-4"/>
+
+             <div className="flex items-center justify-center gap-[20px]">
+             <p className="text-[8px] font-mono text-gray-400">{moment(item.createdAt).format('LL')}</p>
              </div>
-             <div className="border border-[#999] px-[5px] py-[2px] rounded-[5px] cursor-pointer flex items-center justify-center hover:bg-[#d3d3d3]">
-              <img src="/chat.png" alt="chat" className="w-4 h-4"/>
-            </div>
-           </div>
         </div>
 
         </div>
