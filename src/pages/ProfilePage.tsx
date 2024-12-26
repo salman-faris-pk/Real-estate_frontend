@@ -6,8 +6,8 @@ import { Suspense, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
 export const ProfilePage = () => {
+
   const data = useLoaderData();
-  // console.log(data);
 
   const { updateUser, currentUser }: any = useContext(AuthContext);
 
@@ -109,7 +109,18 @@ export const ProfilePage = () => {
       {/**right section */}
       <div className="flex-none h-max md:flex-[2] bg-[#fcf5f3] md:h-full">
         <div className="py-[0px] px-[20px]">
-          <Chat />
+
+         <Suspense fallback={<p>Loading....</p>}>
+           <Await
+             resolve={data.chatResponse}
+             errorElement={<p>Error loading chats!</p>}
+           >
+
+            {(chatResponse) => <Chat chats={chatResponse.data}/>}
+
+           </Await>
+         </Suspense>
+
         </div>
       </div>
     </div>

@@ -1,60 +1,27 @@
 import { useState } from "react";
 
 
-export const Chat = () => {
 
-  const [chat,setChat] = useState(false);
+export const Chat = ({chats}:any) => {
+
+  const [chat, setChat] = useState(false);
 
   return (
     <div className="h-full flex flex-col">
     <div className="flex flex-col gap-2 overflow-y-scroll pro-scrollbar h-[300px]  md:h-[220px] mb-6 md:mb-3">
       <h1 className="font-extralight text-lg md:text-xl mt-3 md:mt-0">Messages</h1>
-      <div className="message" onClick={()=> setChat(true)}>
+      {chats.map((cht:any)=>(
+      <div className="message" key={cht.id}>
         <img
-          src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+           src={cht.receiver.avatar || "/noavatar.jpg"}
           alt="users"
           className="w-8 h-8 rounded-full object-cover"
         />
-        <span className="font-bold text-sm">John Doe</span>
-        <p className="text-sm">Lorem ipsum dolor sit amet...</p>
+        <span className="font-bold text-sm">{cht.receiver.username}</span>
+        <p className="text-sm">{cht.lastMessage}</p>
       </div>
-      <div className="message">
-        <img
-          src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="userr"
-          className="w-8 h-8 rounded-full object-cover"
-        />
-        <span className="font-bold text-sm">John Doe</span>
-        <p className="text-sm">Lorem ipsum dolor sit amet...</p>
-      </div>
-      <div className="message">
-        <img
-          src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt="user"
-           className="w-8 h-8 rounded-full object-cover"
-        />
-        <span className="font-bold text-sm">John Doe</span>
-        <p className="text-sm">Lorem ipsum dolor sit amet...</p>
-      </div>
-      <div className="message">
-        <img
-          src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt=""
-           className="w-8 h-8 rounded-full object-cover"
-        />
-        <span className="font-bold text-sm">John Doe</span>
-        <p className="text-sm">Lorem ipsum dolor sit amet...</p>
-      </div>
-      <div className="message">
-        <img
-          src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-          alt=""
-           className="w-8 h-8 rounded-full object-cover"
-        />
-        <span className="font-bold text-sm">John Doe</span>
-        <p className="text-sm">Lorem ipsum dolor sit amet...</p>
-      </div>
-      
+      ))}
+
     </div>
 
 
