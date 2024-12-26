@@ -116,7 +116,12 @@ export const ProfilePage = () => {
              errorElement={<p>Error loading chats!</p>}
            >
 
-            {(chatResponse) => <Chat chats={chatResponse.data}/>}
+            {(chatResponse) => 
+               chatResponse.data &&  chatResponse.data.length > 0 ? (
+            <Chat chats={chatResponse.data}/> ) : (
+              <p className="text-gray-400 tracking-wider">No chats available at the moment.</p>
+            )
+          }
 
            </Await>
          </Suspense>

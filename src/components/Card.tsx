@@ -1,6 +1,6 @@
 import { Link} from "react-router-dom";
 import { RoomDetails } from '../lib/types'
-import moment from 'moment';
+import { format } from "timeago.js"
 
 
 
@@ -41,7 +41,8 @@ export const Card = ({item}: RoomDataProps) => {
              </div>
 
              <div className="flex items-center justify-center gap-[20px]">
-             <p className="text-[8px] font-mono text-gray-400">{moment(item.createdAt).format('LL')}</p>
+             <p className="text-[8px] font-mono text-gray-400">{format(item.createdAt)}</p>
+
              </div>
         </div>
 
