@@ -13,8 +13,7 @@ import apiRequest from "../lib/apiRequest";
 export const SinglePage = () => {
 
   const post=useLoaderData()
-  // console.log(post);
-
+ 
   const [saved,setSaved]=useState(post.isSaved)
   const { currentUser }:any=useContext(AuthContext)
   const navigate = useNavigate();
