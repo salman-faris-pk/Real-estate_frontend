@@ -1,13 +1,16 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import apiRequest from "../lib/apiRequest";
 import { format } from "timeago.js";
+import { SocketContext } from "../context/SocketContext";
 
 
 export const Chat = ({chats}:any) => {
 
   const [chat, setChat] = useState<any | null>(null);
   const { currentUser }:any=useContext(AuthContext)
+  const { socket }:any=useContext(SocketContext)
+
 
   const handleOpenChat=async(id:any, receiver:any)=>{
     try {
@@ -40,7 +43,11 @@ export const Chat = ({chats}:any) => {
           messages: [...prev.messages, res.data],
         }));
         (e.target as HTMLFormElement).reset();
-
+         
+        socket.emit("sendMessage",{
+          receiverId: chat.receiver.id,
+          data: res.data,
+        });
         
         
       } catch (err) {
@@ -48,12 +55,37 @@ export const Chat = ({chats}:any) => {
       }
   };
 
+
+  useEffect(()=>{
+    const read=async()=>{
+       try {
+        await apiRequest.put("/chat/read/"+ chat.id);
+       } catch (error) {
+        console.log(error);
+       }
+    };
+
+    if(chat && socket){
+      socket.on("getMessage",(data:any)=>{
+        if(chat.id === data.chatId){ // means if its same chat
+           setChat((prev:any)=> ({...prev, messages:[...prev.messages, data]}));
+           read();
+        }
+      });
+    };
+
+    return () => {
+      socket.off("getMessage");
+    };
+
+  },[socket,chat])
+
   return (
     <div className="h-full flex flex-col">
     <div className="flex flex-col gap-2 overflow-y-scroll pro-scrollbar h-[300px]  md:h-[220px] mb-6 md:mb-3">
       <h1 className="font-extralight text-lg md:text-xl mt-3 md:mt-0">Messages</h1>
-      {chats.map((cht:any)=>(
-      <div className={`message ${cht.seenBy.includes(currentUser.id) ? "bg-white" : "bg-[#fecd514e]"}`} key={cht.id}
+      {chats?.map((cht:any)=>(
+      <div className={`message ${cht.seenBy.includes(currentUser.id) || chat?.id === cht.id ? "bg-white" : "bg-[#fecd514e]"}`} key={cht.id}
         onClick={() => handleOpenChat(cht.id, cht.receiver)}
       >
         <img

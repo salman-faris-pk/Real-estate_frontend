@@ -5,6 +5,8 @@ import apiRequest from "../lib/apiRequest";
 import { Suspense, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 
+
+
 export const ProfilePage = () => {
 
   const data = useLoaderData();
@@ -116,12 +118,7 @@ export const ProfilePage = () => {
              errorElement={<p>Error loading chats!</p>}
            >
 
-            {(chatResponse) => 
-               chatResponse.data &&  chatResponse.data.length > 0 ? (
-            <Chat chats={chatResponse.data}/> ) : (
-              <p className="text-gray-400 tracking-wider">No chats available at the moment.</p>
-            )
-          }
+            {(chatResponse) =>   <Chat chats={chatResponse.data}/> }
 
            </Await>
          </Suspense>
