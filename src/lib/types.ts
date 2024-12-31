@@ -14,3 +14,14 @@ export interface RoomDetails {
     createdAt: string | number;
   };
   
+
+  export type ChatData = {
+    id: string;
+    receiver: {
+      id: string;
+      username: string;
+      avatar?: string;
+    };
+    seenBy: string[];
+    lastMessage?: string;
+  };

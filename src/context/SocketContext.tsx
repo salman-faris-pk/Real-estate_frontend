@@ -23,8 +23,7 @@ export const SocketContextProvider=({children}:SocketContextProviderProps)=>{
 
 
     useEffect(()=>{
-        const newSocket = io("http://localhost:4000");
-         setSocket(newSocket);
+         setSocket(io("http://localhost:4000"));
     },[]);
 
 

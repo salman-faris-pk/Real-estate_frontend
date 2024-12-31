@@ -3,26 +3,39 @@ import { AuthContext } from "../context/AuthContext";
 import apiRequest from "../lib/apiRequest";
 import { format } from "timeago.js";
 import { SocketContext } from "../context/SocketContext";
+import { ChatData} from "../lib/types"
 
 
-export const Chat = ({chats}:any) => {
+interface ChatProps{
+  chats: ChatData[];
+};
 
+
+
+export const Chat = ({chats}:ChatProps) => {
+     
   const [chat, setChat] = useState<any | null>(null);
+  const [open,setOpen]=useState(false)
   const { currentUser }:any=useContext(AuthContext)
   const { socket }:any=useContext(SocketContext)
+   
 
-
+  console.log("socketId",socket.id);
+  
+ 
   const handleOpenChat=async(id:any, receiver:any)=>{
+  
     try {
       const res= await apiRequest("/chat/"+id);
       // if(!res.data.seenBy.includes(currentUser.id)){
 
       // }
-
+      
       setChat({...res.data, receiver});
       
     } catch (err) {
       console.log(err);
+      setOpen(false)
     }
   };
 
@@ -32,7 +45,7 @@ export const Chat = ({chats}:any) => {
 
       const formData = new FormData(e.target as HTMLFormElement)
       const text= formData.get("text")
-
+       
       if (!text) return;
 
       try {
@@ -42,10 +55,11 @@ export const Chat = ({chats}:any) => {
           ...prev,
           messages: [...prev.messages, res.data],
         }));
+
         (e.target as HTMLFormElement).reset();
          
         socket.emit("sendMessage",{
-          receiverId: chat.receiver.id,
+          receiverId: chat?.receiver?.id,
           data: res.data,
         });
         
@@ -57,19 +71,25 @@ export const Chat = ({chats}:any) => {
 
 
   useEffect(()=>{
-    const read=async()=>{
+    
+     const read=async()=>{
        try {
         await apiRequest.put("/chat/read/"+ chat.id);
        } catch (error) {
         console.log(error);
        }
-    };
+     };
+     
+    
+    
+    if (chat && socket) {
+      socket.on("getMessage", (data:any) => {
 
-    if(chat && socket){
-      socket.on("getMessage",(data:any)=>{
-        if(chat.id === data.chatId){ // means if its same chat
-           setChat((prev:any)=> ({...prev, messages:[...prev.messages, data]}));
-           read();
+          console.log("data",data);
+                  
+        if (chat.id === data.chatId) {
+          setChat((prev:any) => ({ ...prev, messages: [...prev.messages, data] }));
+          read();
         }
       });
     };
@@ -77,31 +97,42 @@ export const Chat = ({chats}:any) => {
     return () => {
       socket.off("getMessage");
     };
-
+  
   },[socket,chat])
+
+
 
   return (
     <div className="h-full flex flex-col">
     <div className="flex flex-col gap-2 overflow-y-scroll pro-scrollbar h-[300px]  md:h-[220px] mb-6 md:mb-3">
       <h1 className="font-extralight text-lg md:text-xl mt-3 md:mt-0">Messages</h1>
-      {chats?.map((cht:any)=>(
-      <div className={`message ${cht.seenBy.includes(currentUser.id) || chat?.id === cht.id ? "bg-white" : "bg-[#fecd514e]"}`} key={cht.id}
-        onClick={() => handleOpenChat(cht.id, cht.receiver)}
-      >
-        <img
-           src={cht.receiver.avatar || "/noavatar.jpg"}
-          alt="users"
-          className="w-8 h-8 rounded-full object-cover"
-        />
-        <span className="font-bold text-sm">{cht.receiver.username}</span>
-        <p className="text-sm">{cht.lastMessage}</p>
-      </div>
-      ))}
+      {chats?.length > 0 ? (
+       chats.map((cht: any) => (
+       <div
+      className={`message ${cht.seenBy.includes(currentUser.id) || chat?.id === cht.id ? "bg-white" : "bg-[#fecd514e]"}`}
+      key={cht.id}
+      onClick={() => {
+        setOpen(true);
+        handleOpenChat(cht.id, cht.receiver);
+      }}
+    >
+      <img
+        src={cht.receiver.avatar || "/noavatar.jpg"}
+        alt="users"
+        className="w-8 h-8 rounded-full object-cover"
+      />
+      <span className="font-bold text-sm">{cht.receiver.username}</span>
+      <p className="text-sm">{cht.lastMessage || "no messages"}</p>
+    </div>
+     ))
+    ) : (
+     <p>No chats available.</p>
+    )}
 
     </div>
 
 
-    {chat && (
+    {open && chat && (
       <div className="flex-[1] bg-white flex flex-col justify-between">
 
         <div className="bg-[#f7c14b85] p-2 md:p-1 font-bold flex items-center justify-between rounded-sm">
@@ -113,17 +144,31 @@ export const Chat = ({chats}:any) => {
             />
               {chat.receiver.username}
           </div>
-          <span className="cursor-pointer text-sm" onClick={()=>setChat(null)}>X</span>
+          <span className="cursor-pointer text-sm" onClick={()=>{
+            setChat(null)
+            setOpen(false)
+            }}>X</span>
         </div>
 
         <div className="h-[400px] md:h-[200px] overflow-scroll pro-scrollbar p-3 flex flex-col gap-[20px]">
-          {chat.Messages.map((msg:any)=>(
-          <div className={`w-1/2 ${msg.userId === currentUser.id ? "self-end text-right" : "self-start text-left"}`}  key={msg.id}>
-            <p className="text-sm">{msg.text}</p>
-            <span className="text-[8px] bg-[#f7c14b39] p-[2px] rounded-[5px]">{format(msg.createdAt)}</span>
-          </div>
-          ))}
-        </div>
+     {chat?.messages?.length > 0 ? (
+        chat?.messages?.map((msg: any) => (
+      <div
+        className={`w-1/2 ${
+          msg.userId === currentUser.id ? "self-end text-right" : "self-start text-left"
+        }`}
+        key={msg.id}
+      >
+        <p className="text-sm">{msg.text}</p>
+        <span className="text-[8px] bg-[#f7c14b39] p-[2px] rounded-[5px]">
+          {format(msg.createdAt)}
+        </span>
+      </div>
+      ))
+     ) : (
+    <p>No messages available</p>
+  )}
+    </div>
 
         <form onSubmit={handleSubmit} className="border-t-2 border-solid border-[#f7c14b85] h-[50px] md:h-[40px] flex items-center justify-between">
           <textarea name="text" className="flex-[3] h-full border-none outline-none p-2 text-xs text-black "></textarea>

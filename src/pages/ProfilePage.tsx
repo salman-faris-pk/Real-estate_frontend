@@ -118,7 +118,7 @@ export const ProfilePage = () => {
              errorElement={<p>Error loading chats!</p>}
            >
 
-            {(chatResponse) =>   <Chat chats={chatResponse.data}/> }
+            {(chatResponse) => <Chat chats={chatResponse?.data || []}/> }
 
            </Await>
          </Suspense>
