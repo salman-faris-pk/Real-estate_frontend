@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import apiRequest from "../lib/apiRequest";
 import { format } from "timeago.js";
 import { SocketContext } from "../context/SocketContext";
 import { ChatData} from "../lib/types"
+import { useNotificationStore } from "../lib/notificationStore";
 
 
 interface ChatProps{
@@ -19,17 +20,21 @@ export const Chat = ({chats}:ChatProps) => {
   const { currentUser }:any=useContext(AuthContext)
   const { socket }:any=useContext(SocketContext)
    
-
-  console.log("socketId",socket.id);
+  const messageEndRef=useRef<HTMLDivElement | null>(null)
   
- 
+  const decrease = useNotificationStore((state) => state.decrease);
+
+  useEffect(()=>{
+      messageEndRef.current?.scrollIntoView({behavior: "smooth"})
+  },[chat])
+
   const handleOpenChat=async(id:any, receiver:any)=>{
   
     try {
       const res= await apiRequest("/chat/"+id);
-      // if(!res.data.seenBy.includes(currentUser.id)){
-
-      // }
+      if(!res.data.seenBy.includes(currentUser.id)){
+         decrease();
+      }
       
       setChat({...res.data, receiver});
       
@@ -84,9 +89,7 @@ export const Chat = ({chats}:ChatProps) => {
     
     if (chat && socket) {
       socket.on("getMessage", (data:any) => {
-
-          console.log("data",data);
-                  
+          
         if (chat.id === data.chatId) {
           setChat((prev:any) => ({ ...prev, messages: [...prev.messages, data] }));
           read();
@@ -109,8 +112,14 @@ export const Chat = ({chats}:ChatProps) => {
       {chats?.length > 0 ? (
        chats.map((cht: any) => (
        <div
-      className={`message ${cht.seenBy.includes(currentUser.id) || chat?.id === cht.id ? "bg-white" : "bg-[#fecd514e]"}`}
+      className="message"
       key={cht.id}
+      style={{
+        backgroundColor:
+          cht.seenBy.includes(currentUser.id) || chat?.id === cht.id
+            ? "white"
+            : "#fecd514e",
+      }}
       onClick={() => {
         setOpen(true);
         handleOpenChat(cht.id, cht.receiver);
@@ -122,7 +131,7 @@ export const Chat = ({chats}:ChatProps) => {
         className="w-8 h-8 rounded-full object-cover"
       />
       <span className="font-bold text-sm">{cht.receiver.username}</span>
-      <p className="text-sm">{cht.lastMessage || "no messages"}</p>
+      <p className="text-xs font-sans">{cht.lastMessage || "no messages"}</p>
     </div>
      ))
     ) : (
@@ -133,7 +142,7 @@ export const Chat = ({chats}:ChatProps) => {
 
 
     {open && chat && (
-      <div className="flex-[1] bg-white flex flex-col justify-between">
+      <div className="flex-[1] bg-white flex flex-col justify-between mb-2">
 
         <div className="bg-[#f7c14b85] p-2 md:p-1 font-bold flex items-center justify-between rounded-sm">
           <div className="flex items-center gap-[20px]">
@@ -144,14 +153,15 @@ export const Chat = ({chats}:ChatProps) => {
             />
               {chat.receiver.username}
           </div>
-          <span className="cursor-pointer text-sm" onClick={()=>{
+         
+          <span className="cursor-pointer text-sm pe-2" onClick={()=>{
             setChat(null)
             setOpen(false)
             }}>X</span>
         </div>
 
-        <div className="h-[400px] md:h-[200px] overflow-scroll pro-scrollbar p-3 flex flex-col gap-[20px]">
-     {chat?.messages?.length > 0 ? (
+        <div className="h-[400px] sm:h-[300px]  md:h-[200px] overflow-scroll pro-scrollbar p-3 flex flex-col gap-[20px]">
+        {chat?.messages?.length > 0 ? (
         chat?.messages?.map((msg: any) => (
       <div
         className={`w-1/2 ${
@@ -164,14 +174,15 @@ export const Chat = ({chats}:ChatProps) => {
           {format(msg.createdAt)}
         </span>
       </div>
-      ))
+      ))  
      ) : (
     <p>No messages available</p>
   )}
+      <div ref={messageEndRef}></div>
     </div>
 
         <form onSubmit={handleSubmit} className="border-t-2 border-solid border-[#f7c14b85] h-[50px] md:h-[40px] flex items-center justify-between">
-          <textarea name="text" className="flex-[3] h-full border-none outline-none p-2 text-xs text-black "></textarea>
+          <textarea name="text" className="flex-[3] h-full border-none outline-1 outline-green-200 p-2 text-xs text-black "></textarea>
           <button className="flex-[1] bg-[#f7c14b85] h-full font-mono border-none cursor-pointer">Send</button>
         </form>
       </div>
